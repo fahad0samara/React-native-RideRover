@@ -1,0 +1,87 @@
+{
+  "categories": [
+    {
+      "title": "All",
+      "bikes": [
+        {
+          "name": "City Cruiser",
+          "image": "city_cruiser.jpg",
+          "type": "Urban",
+          "price": 799.99,
+          "description": "A sleek and comfortable cruiser bike designed for city commuting."
+        },
+        {
+          "name": "Road Racer",
+          "image": "road_racer.jpg",
+          "type": "Roadbike",
+          "price": 1299.99,
+          "description": "A high-performance road bike engineered for speed and agility on paved roads."
+        },
+        {
+          "name": "Mountain Master",
+          "image": "mountain_master.jpg",
+          "type": "Mountain",
+          "price": 1599.99,
+          "description": "An all-terrain mountain bike built for rugged trails and off-road adventures."
+        }
+      ]
+    },
+    {
+      "title": "Roadbike",
+      "bikes": [
+        {
+          "name": "Speedster",
+          "image": "speedster.jpg",
+          "type": "Roadbike",
+          "price": 1099.99,
+          "description": "A lightweight and aerodynamic road bike designed for fast-paced rides."
+        },
+        {
+          "name": "Commuter Pro",
+          "image": "commuter_pro.jpg",
+          "type": "Roadbike",
+          "price": 899.99,
+          "description": "A versatile commuter bike built for daily city commutes and long-distance rides."
+        }
+      ]
+    },
+    {
+      "title": "Mountain",
+      "bikes": [
+        {
+          "name": "Trailblazer",
+          "image": "trailblazer.jpg",
+          "type": "Mountain",
+          "price": 1399.99,
+          "description": "A durable and agile mountain bike optimized for challenging trails and rough terrain."
+        },
+        {
+          "name": "Adventure Seeker",
+          "image": "adventure_seeker.jpg",
+          "type": "Mountain",
+          "price": 1699.99,
+          "description": "An adventure-ready mountain bike equipped for exploring remote trails and wilderness."
+        }
+      ]
+    },
+    {
+      "title": "Urban",
+      "bikes": [
+        {
+          "name": "City Explorer",
+          "image": "city_explorer.jpg",
+          "type": "Urban",
+          "price": 749.99,
+          "description": "A stylish and practical urban bike perfect for navigating city streets and urban environments."
+        },
+        {
+          "name": "Street Cruiser",
+          "image": "street_cruiser.jpg",
+          "type": "Urban",
+          "price": 599.99,
+          "description": "A comfortable and reliable cruiser bike designed for leisurely rides around town."
+        }
+      ]
+    }
+  ]
+}
