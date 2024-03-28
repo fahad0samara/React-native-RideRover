@@ -4,20 +4,36 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Bike } from '../Home';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  BikeDetails: { bike: Bike };
+};
+
+
 interface BicycleCardProps {
     bike: Bike;
   }
+
+  type BikeDetailsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'BikeDetails'>;
+
+
+
 const BicycleCard: React.FC<BicycleCardProps> = ({ bike }) => {
+  const navigation = useNavigation<BikeDetailsScreenNavigationProp>();
+
+  const handleCardPress = () => {
+    navigation.navigate('BikeDetails', { bike });
+  };
+
     return (
       <TouchableOpacity
         style={styles.bicycleCardContainer}
         // Add onPress event handler if needed
+        onPress={handleCardPress}
       >
-        <View style={styles.bicycleHeartContainer}>
-          {/* Render heart icon */}
-            <FontAwesome name="heart" size={20} color="#F59E0B" style={styles.bicycleHeartIcon} />
-
-        </View>
+  
         <Image
                 source={{ uri: bike.image }} 
                 style={styles.bicycleImage} 

@@ -1,88 +1,69 @@
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { TouchableOpacity } from "react-native";
 
 import Home from "./src/screen/Home";
 import SearchScreen from "./src/screen/SearchScreent";
 import Cart from "./src/cart/Cart";
+import { persistor, store } from "./src/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from 'react-redux';
+import BikeDetails from "./src/screen/Home/BikeDetails";
 
-// Import your screens here
-
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-const BikesStack = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen name="Bikes" component={Home} />
-  </Stack.Navigator>
-);
-
-const SearchStack = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen name="SearchScreen" component={SearchScreen} />
-    {/* Add more screens if needed */}
-  </Stack.Navigator>
-);
-
-const CartStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Cart" component={Cart} />
-    {/* Add more screens if needed */}
-  </Stack.Navigator>
-);
-
-const NotificationsStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Notifications" component={Cart} />
-    {/* Add more screens if needed */}
-  </Stack.Navigator>
-);
+const Tab = createStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName="Tabs"
+          >
+            <Stack.Screen name="Tabs" component={TabsNavigator} />
+            <Stack.Screen name="BikeDetails" component={BikeDetails} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
+  );
+};
 
-            if (route.name === "Bikes") {
-              iconName = focused ? "bicycle" : "bicycle";
-            } else if (route.name === "Search") {
-              iconName = focused ? "search" : "search"; 
-            } else if (route.name === "Cart") {
-              iconName = focused ? "shopping-cart" : "shopping-cart";
-            } else if (route.name === "Notifications") {
-              iconName = focused ? "bell" : "bell-o";
-            }
+const TabsNavigator = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-            iconName = iconName || "question"; 
-            return <Icon name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: "#F59E0B",
-          tabBarInactiveTintColor: "gray",
-          headerShown: false,
-        })}
-      >
-        <Tab.Screen name="Bikes" component={BikesStack}
-   
-          
-         />
-        <Tab.Screen name="Search" component={SearchStack} />
-        <Tab.Screen name="Cart" component={CartStack} />
-        <Tab.Screen name="Notifications" component={NotificationsStack} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          if (route.name === "Bikes") {
+            iconName = focused ? "bicycle" : "bicycle";
+          } else if (route.name === "Search") {
+            iconName = focused ? "search" : "search"; 
+          } else if (route.name === "Cart") {
+            iconName = focused ? "shopping-cart" : "shopping-cart";
+          } else if (route.name === "Notifications") {
+            iconName = focused ? "bell" : "bell-o";
+          }
+
+          iconName = iconName || "question"; 
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#F59E0B",
+        tabBarInactiveTintColor: "gray",
+        headerShown: false,
+      })}
+    >
+      <Tab.Screen name="Bikes" component={Home} />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Cart" component={Cart} />
+    </Tab.Navigator>
   );
 };
 
