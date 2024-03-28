@@ -3,8 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Cart } from "./src/cart/Cart";
-import { Home } from "./src/screen/Home";
+
+import Home from "./src/screen/Home";
+import SearchScreen from "./src/screen/SearchScreent";
+import Cart from "./src/cart/Cart";
 
 // Import your screens here
 
@@ -21,9 +23,13 @@ const BikesStack = () => (
   </Stack.Navigator>
 );
 
-const ProfileStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Profile" component={Cart} />
+const SearchStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
+    <Stack.Screen name="SearchScreen" component={SearchScreen} />
     {/* Add more screens if needed */}
   </Stack.Navigator>
 );
@@ -52,16 +58,15 @@ const App = () => {
 
             if (route.name === "Bikes") {
               iconName = focused ? "bicycle" : "bicycle";
-            } else if (route.name === "Profile") {
-              iconName = focused ? "user" : "user-o";
+            } else if (route.name === "Search") {
+              iconName = focused ? "search" : "search"; 
             } else if (route.name === "Cart") {
               iconName = focused ? "shopping-cart" : "shopping-cart";
             } else if (route.name === "Notifications") {
               iconName = focused ? "bell" : "bell-o";
             }
 
-            iconName = iconName || "question"; // default icon if iconName is undefined
-            // You can return any component here
+            iconName = iconName || "question"; 
             return <Icon name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: "#F59E0B",
@@ -73,7 +78,7 @@ const App = () => {
    
           
          />
-        <Tab.Screen name="Profile" component={ProfileStack} />
+        <Tab.Screen name="Search" component={SearchStack} />
         <Tab.Screen name="Cart" component={CartStack} />
         <Tab.Screen name="Notifications" component={NotificationsStack} />
       </Tab.Navigator>
