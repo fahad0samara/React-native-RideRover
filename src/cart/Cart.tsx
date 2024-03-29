@@ -1,29 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   View,
   SafeAreaView,
   Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  FlatList,
 } from "react-native";
 import IonIcon from "react-native-vector-icons/Ionicons";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart, decreaseQuantity, increaseQuantity, removeItemFromCart } from "../redux/cart/cartSlice";
 
-const Subtotal = () => {
+const Subtotal = ({ subtotal, shipping, total }) => {
   return (
     <View style={styles.subtotalContainer}>
       <View style={styles.subtotalItem}>
         <Text style={styles.subtotalText}>Subtotal</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.currency}>$</Text>
-          <Text style={styles.price}>3,400.00</Text>
+          <Text style={styles.price}>{subtotal.toFixed(2)}</Text>
         </View>
       </View>
       <View style={styles.subtotalItem}>
         <Text style={styles.subtotalText}>Shipping</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.currency}>$</Text>
-          <Text style={styles.price}>400.00</Text>
+          <Text style={styles.price}>{shipping.toFixed(2)}</Text>
         </View>
       </View>
       <View style={styles.divider}></View>
@@ -31,49 +34,60 @@ const Subtotal = () => {
         <Text style={styles.subtotalText}>Total</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.currency}>$</Text>
-          <Text style={styles.price}>3,800.00</Text>
+          <Text style={styles.price}>{total.toFixed(2)}</Text>
         </View>
       </View>
     </View>
   );
 };
 
-const BicycleCard = () => {
-  const [amount, setAmount] = useState(1);
+const BicycleCard = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(removeItemFromCart(item.id));
+  };
+
+  const handleIncreaseQuantity = () => {
+    dispatch(increaseQuantity(item.id));
+  };
+
+  const handleDecreaseQuantity = () => {
+    dispatch(decreaseQuantity(item.id));
+  };
+
 
   return (
     <View style={styles.bicycleCardContainer}>
       <View style={styles.bicycleCard}>
         <View style={styles.imageContainer}>
-  
+          <Image source={{ uri: item.image }} style={styles.image} />
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={styles.bikeName}>Pinarello Bike</Text>
-          <Text style={styles.bikeType}>Mountain Bike</Text>
+          <Text style={styles.bikeName}>{item.name}</Text>
+
           <View style={styles.priceContainer}>
             <Text style={styles.currency}>$</Text>
-            <Text style={styles.price}>{Number(amount * 1200).toFixed(2)}</Text>
+            <Text style={styles.price}>
+              {(item.price * item.quantity).toFixed(2)}
+            </Text>
           </View>
         </View>
       </View>
       <View style={styles.interactionContainer}>
-        <IonIcon name="ios-trash" color="orange" size={20} />
+        <TouchableOpacity style={styles.handleDelete} onPress={handleDelete}>
+          <IonIcon name="trash-outline" color="white" size={20} />
+        </TouchableOpacity>
         <View style={styles.quantityContainer}>
           <TouchableOpacity
-            style={styles.quantityButton}
-            onPress={() => {
-              if (amount > 0) setAmount(amount - 1);
-            }}
-          >
+            onPress={handleDecreaseQuantity}
+           style={styles.quantityButton}>
             <Text style={styles.quantityButtonText}>-</Text>
           </TouchableOpacity>
-          <Text style={styles.quantity}>{amount}</Text>
+          <Text style={styles.quantity}>{item.quantity}</Text>
           <TouchableOpacity
-            style={styles.quantityButton}
-            onPress={() => {
-              setAmount(amount + 1);
-            }}
-          >
+            onPress={handleIncreaseQuantity}
+           style={styles.quantityButton}>
             <Text style={styles.quantityButtonText}>+</Text>
           </TouchableOpacity>
         </View>
@@ -82,43 +96,73 @@ const BicycleCard = () => {
   );
 };
 
-export default function Cart() {
+const Cart = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  // Calculate subtotal, shipping, and total based on cart items
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const shipping = 20;
+  const total = subtotal + shipping;
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Cart list</Text>
-          <Text style={styles.subheaderText}>(3 items)</Text>
+      {cartItems.length === 0 ? (
+        <View style={styles.emptyCartContainer}>
+          <Text style={styles.emptyCartText}>Your cart is empty.</Text>
         </View>
-        <View style={styles.blankContainer}>
-          <Text style={styles.blankText}>BLANK</Text>
+      ) : (
+        <View style={styles.header}>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.headerText}>Cart list</Text>
+            <Text style={styles.subheaderText}>({cartItems.length} items)</Text>
+          </View>
+          <TouchableOpacity onPress={handleClearCart}>
+            <Text style={styles.clearButton}>Clear Cart</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-      <View style={styles.cardsContainer}>
-        <BicycleCard />
-        <BicycleCard />
-        <BicycleCard />
-      </View>
-      <Subtotal />
-      <TouchableOpacity style={styles.checkoutButton}>
-        <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
-      </TouchableOpacity>
+      )}
+
+      <FlatList
+        data={cartItems}
+        renderItem={({ item }) => <BicycleCard item={item} />}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.cardsContainer}
+      />
+
+      {cartItems.length > 0 && (
+        <Subtotal subtotal={subtotal} shipping={shipping} total={total} />
+      )}
+      {cartItems.length > 0 && (
+        <TouchableOpacity style={styles.checkoutButton}>
+          <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
-}
+};
+
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 30,
   },
   headerTextContainer: {
     alignItems: "center",
@@ -138,11 +182,29 @@ const styles = StyleSheet.create({
   blankText: {
     color: "white",
   },
+
+  clearButton: {
+    color: "red",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  emptyCartContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyCartText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "gray",
+  },
+
   cardsContainer: {
-    marginTop: 20,
+    flexGrow: 1,
+    marginTop: 10,
   },
   bicycleCardContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   bicycleCard: {
     flexDirection: "row",
@@ -155,26 +217,24 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 75,
+    height: 75,
+    resizeMode: "contain",
   },
   detailsContainer: {
-    marginLeft: 15,
     flex: 1,
+    marginLeft: 10,
   },
   bikeName: {
     fontSize: 18,
     fontWeight: "bold",
     color: "black",
   },
-  bikeType: {
-    fontSize: 14,
-    color: "gray",
-  },
+  bikeType: {},
   priceContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 5,
+    marginTop: 1,
   },
   currency: {
     fontSize: 16,
@@ -190,7 +250,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 10,
+    marginTop: 5,
   },
   quantityContainer: {
     flexDirection: "row",
@@ -219,7 +279,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F3F4F6",
     borderRadius: 10,
     padding: 20,
-    marginTop: 20,
+    marginTop: 10,
   },
   subtotalItem: {
     flexDirection: "row",
@@ -239,18 +299,21 @@ const styles = StyleSheet.create({
   },
   checkoutButton: {
     backgroundColor: "yellow",
-    padding: 20,
+    padding: 10,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
   checkoutButtonText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "black",
-
-
-
-	  },	
+  },
+  handleDelete: {
+    backgroundColor: "red",
+    padding: 5,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
-
