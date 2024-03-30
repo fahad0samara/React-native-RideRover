@@ -87,7 +87,8 @@ const BicycleCard = ({ item }) => {
           <Text style={styles.quantity}>{item.quantity}</Text>
           <TouchableOpacity
             onPress={handleIncreaseQuantity}
-           style={styles.quantityButton}>
+          
+           style={styles.quantityButtonIN}>
             <Text style={styles.quantityButtonText}>+</Text>
           </TouchableOpacity>
         </View>
@@ -111,6 +112,10 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -238,8 +243,9 @@ const styles = StyleSheet.create({
   },
   currency: {
     fontSize: 16,
-    color: "yellow",
+    color: "#F59E0B",
     fontWeight: "bold",
+    marginRight: 3,
   },
   price: {
     fontSize: 20,
@@ -265,10 +271,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+    quantityButtonIN: {
+        backgroundColor: "#F59E0B",
+        borderRadius: 50,
+        padding: 5,
+        width: 30,
+        height: 30,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
   quantityButtonText: {
     color: "white",
     fontSize: 18,
     fontWeight: "bold",
+    marginHorizontal: 1,
+    marginVertical: -4,
   },
   quantity: {
     fontSize: 20,
@@ -298,16 +317,17 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   checkoutButton: {
-    backgroundColor: "yellow",
+    backgroundColor: "#F59E0B",
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,
+  
   },
   checkoutButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "black",
+    color: "white",
   },
   handleDelete: {
     backgroundColor: "red",
@@ -316,4 +336,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  
 });
