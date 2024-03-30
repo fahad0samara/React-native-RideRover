@@ -6,9 +6,12 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { BicycleCardProps, BikeDetailsScreenNavigationProp } from '../../Type';
+import { Bike, BikeDetailsScreenNavigationProp } from '../../Type';
 
 
+interface BicycleCardProps {
+  bike: Bike;
+}
 
 
 

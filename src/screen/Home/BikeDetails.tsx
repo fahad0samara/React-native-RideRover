@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Bike } from "../Home";
+
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/cart/cartSlice";
+import { Bike } from "../../Type";
 
 const BikeDetails: React.FC<{ route: { params: { bike: Bike } }, navigation: any }> = ({ route, navigation }) => {
   const { bike } = route.params;

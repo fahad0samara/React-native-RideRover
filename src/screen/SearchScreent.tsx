@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, FlatList, Image, StyleSheet, ActivityIndicator, Platform, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { Bike } from './Home'; // Assuming Bike type is defined in Home file
 import API_URL from '../../apiConfig'; // Import your API URL constant
 import { useNavigation } from '@react-navigation/native';
-import { BikeDetailsScreenNavigationProp } from '../Type';
+import { Bike, BikeDetailsScreenNavigationProp } from '../Type';
 
-const SearchScreen: React.FC = ({ bike }) => {
+
+interface BicycleCardProps {
+  bike: Bike;
+}
+
+const SearchScreen:  React.FC<BicycleCardProps> = ({ bike }) => {
   const navigation = useNavigation<BikeDetailsScreenNavigationProp>();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Bike[]>([]);

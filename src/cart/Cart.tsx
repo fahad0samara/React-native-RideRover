@@ -12,7 +12,7 @@ import IonIcon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, decreaseQuantity, increaseQuantity, removeItemFromCart } from "../redux/cart/cartSlice";
 import { RootState } from "../redux/store";
-import { BicycleCardProps, SubtotalProps } from "../Type";
+import { SubtotalProps } from "../Type";
 
 
 
@@ -44,6 +44,17 @@ const Subtotal: React.FC<SubtotalProps> = ({ subtotal, shipping, total }) => {
     </View>
   );
 };
+
+interface BicycleCardProps {
+  item: {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+  };
+
+}
 
 const BicycleCard: React.FC<BicycleCardProps> = ({ item }) => {
   const dispatch = useDispatch();
