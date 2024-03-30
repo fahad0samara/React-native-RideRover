@@ -3,13 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { TouchableOpacity, View, Text } from "react-native";
 import { useSelector } from "react-redux"; // Import useSelector hook
 
 import Home from "./src/screen/Home";
 import SearchScreen from "./src/screen/SearchScreent";
 import Cart from "./src/cart/Cart";
-import { persistor, store } from "./src/redux/store";
+import { RootState, persistor, store } from "./src/redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import BikeDetails from "./src/screen/Home/BikeDetails";
@@ -32,7 +31,7 @@ const BikesStack = () => {
 
 const TabNavigator = () => {
   // Get cart items from Redux store
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state:RootState) => state.cart.items);
   // Calculate total quantity of items in the cart
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 

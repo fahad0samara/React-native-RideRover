@@ -3,20 +3,12 @@ import { StyleSheet } from 'react-native';
 import IonIcon from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { Bike } from '../Home';
+
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-
-type RootStackParamList = {
-  BikeDetails: { bike: Bike };
-};
+import { BicycleCardProps, BikeDetailsScreenNavigationProp } from '../../Type';
 
 
-interface BicycleCardProps {
-    bike: Bike;
-  }
-
-  type BikeDetailsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'BikeDetails'>;
 
 
 

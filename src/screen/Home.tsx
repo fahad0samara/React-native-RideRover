@@ -17,21 +17,9 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import axios from "axios";
 import API_URL from "../../apiConfig";
 import BicycleCard from "./Home/BicycleCard";
+import { Bike, CategoryProps } from "../Type";
 
-export interface Bike {
-  _id: string;
-  category: string;
-  description: string;
-  image: string;
-  name: string;
-  price: number;
-}
 
-interface CategoryProps {
-  item: { title: string };
-  onPress: (title: string) => void;
-  selected: string;
-}
 
 const Category: React.FC<CategoryProps> = ({ item, onPress, selected }) => {
     return (

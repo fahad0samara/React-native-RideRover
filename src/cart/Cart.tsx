@@ -11,8 +11,12 @@ import {
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, decreaseQuantity, increaseQuantity, removeItemFromCart } from "../redux/cart/cartSlice";
+import { RootState } from "../redux/store";
+import { BicycleCardProps, SubtotalProps } from "../Type";
 
-const Subtotal = ({ subtotal, shipping, total }) => {
+
+
+const Subtotal: React.FC<SubtotalProps> = ({ subtotal, shipping, total }) => {
   return (
     <View style={styles.subtotalContainer}>
       <View style={styles.subtotalItem}>
@@ -41,7 +45,7 @@ const Subtotal = ({ subtotal, shipping, total }) => {
   );
 };
 
-const BicycleCard = ({ item }) => {
+const BicycleCard: React.FC<BicycleCardProps> = ({ item }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
@@ -97,9 +101,10 @@ const BicycleCard = ({ item }) => {
   );
 };
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   // Calculate subtotal, shipping, and total based on cart items
   const subtotal = cartItems.reduce(
@@ -119,6 +124,7 @@ const Cart = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+        <View style={styles.container1}>
       {cartItems.length === 0 ? (
         <View style={styles.emptyCartContainer}>
           <Text style={styles.emptyCartText}>Your cart is empty.</Text>
@@ -150,6 +156,7 @@ const Cart = () => {
           <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
         </TouchableOpacity>
       )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -160,9 +167,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 20,
+  
+    
+  
+
+  },
+  container1: {
+    paddingHorizontal: 15,
+    flex: 1,
     paddingBottom: 20,
   },
+
   header: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, FlatList, Image, StyleSheet, ActivityIndicator, Platform, StatusBar, SafeAreaView } from 'react-native';
+import { View, TextInput, Text, FlatList, Image, StyleSheet, ActivityIndicator, Platform, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { Bike } from './Home'; // Assuming Bike type is defined in Home file
 import API_URL from '../../apiConfig'; // Import your API URL constant
+import { useNavigation } from '@react-navigation/native';
+import { BikeDetailsScreenNavigationProp } from '../Type';
 
-const SearchScreen: React.FC = () => {
+const SearchScreen: React.FC = ({ bike }) => {
+  const navigation = useNavigation<BikeDetailsScreenNavigationProp>();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Bike[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [noItemsFound, setNoItemsFound] = useState(false);
+
+  const handleCardPress = () => {
+    navigation.navigate('BikeDetails', { bike });
+  };
+
+
 
   useEffect(() => {
     if (searchQuery.length >= 3) {
@@ -46,7 +55,13 @@ const SearchScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
 
+
     <View style={styles.container}>
+    <TouchableOpacity
+ 
+ // Add onPress event handler if needed
+ onPress={handleCardPress}
+>
       <Text style={styles.title}>Search for Bikes</Text>
       <TextInput
         style={styles.input}
@@ -78,6 +93,7 @@ const SearchScreen: React.FC = () => {
           )}
         </View>
       )}
+    </TouchableOpacity>
     </View>
     </SafeAreaView>
   );
