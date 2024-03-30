@@ -4,6 +4,23 @@
 
 The Bike Store App is a mobile application designed to provide users with a convenient platform for browsing and purchasing a variety of bicycles. The app features four main screens:
 
+
+<table>
+  <tr>
+    <td align="center"><img src="https://github.com/fahad0samara/React-native-RideRover/assets/90055525/7253082a-20f2-4bc6-aed6-4510d3221215" alt="Image 1"></td>
+    <td align="center"><img src="https://github.com/fahad0samara/React-native-RideRover/assets/90055525/0258470b-0d00-4f53-9770-7f8afaaa71a9" alt="Image 2"></td>
+    <td align="center"><img src="https://github.com/fahad0samara/React-native-RideRover/assets/90055525/43a651d5-b77f-439c-b586-b80eb9414ebd" alt="Image 3"></td>
+    <td align="center"><img src="https://github.com/fahad0samara/React-native-RideRover/assets/90055525/3ba2deae-48e6-464b-b19e-e9aaf554181b" alt="Image 4"></td>
+  </tr>
+  <tr>
+    <td align="center">Image 1</td>
+    <td align="center">Image 2</td>
+    <td align="center">Image 3</td>
+    <td align="center">Image 4</td>
+  </tr>
+</table>
+
+
 1. **Home Screen**: This screen displays a selection of featured bicycles and allows users to browse through different categories of bikes.
 
 2. **Search Screen**: Users can search for specific bikes using keywords. The app provides real-time search results and filters based on the user's input.
