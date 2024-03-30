@@ -94,9 +94,9 @@ const Category: React.FC<CategoryProps> = ({ item, onPress, selected }) => {
           <View style={styles.header}>
         <View>
 
-        <Text style={{ fontSize: 24, color: "#000000" }}>Hello, Rider</Text>
+        <Text style={{ fontSize: 24, color: "#000000" }}>Hello, Fahad</Text>
         
-        <Text style={{ fontSize: 16, color: "#6B7280" }}>Let's find your bike</Text>
+        <Text style={{ fontSize: 18, color:"#F59E0B" }}>Let's find your bike</Text>
         </View>
      
         

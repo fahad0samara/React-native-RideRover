@@ -7,7 +7,6 @@ import {
   import {persistStore, persistReducer} from "redux-persist";
   import storage from "redux-persist/lib/storage";
 
-  import darkModeReducer from "./DarkMode/darkModeSlice";
   import cartReducer from "./cart/cartSlice";
 
   
@@ -22,7 +21,7 @@ import {
     combineReducers({
     //   auth: authReducer,
       cart: cartReducer,
-      darkmode: darkModeReducer,
+  
     })
   );
   

@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 20,
+    top: 35,
     left: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+  
   },
   contentContainer: {
     flex: 1,

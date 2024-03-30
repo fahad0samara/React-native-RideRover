@@ -10,11 +10,14 @@ import {
 } from "react-native";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, decreaseQuantity, increaseQuantity, removeItemFromCart } from "../redux/cart/cartSlice";
+import {
+  clearCart,
+  decreaseQuantity,
+  increaseQuantity,
+  removeItemFromCart,
+} from "../redux/cart/cartSlice";
 import { RootState } from "../redux/store";
 import { SubtotalProps } from "../Type";
-
-
 
 const Subtotal: React.FC<SubtotalProps> = ({ subtotal, shipping, total }) => {
   return (
@@ -53,7 +56,6 @@ interface BicycleCardProps {
     quantity: number;
     image: string;
   };
-
 }
 
 const BicycleCard: React.FC<BicycleCardProps> = ({ item }) => {
@@ -70,7 +72,6 @@ const BicycleCard: React.FC<BicycleCardProps> = ({ item }) => {
   const handleDecreaseQuantity = () => {
     dispatch(decreaseQuantity(item.id));
   };
-
 
   return (
     <View style={styles.bicycleCardContainer}>
@@ -96,14 +97,15 @@ const BicycleCard: React.FC<BicycleCardProps> = ({ item }) => {
         <View style={styles.quantityContainer}>
           <TouchableOpacity
             onPress={handleDecreaseQuantity}
-           style={styles.quantityButton}>
+            style={styles.quantityButton}
+          >
             <Text style={styles.quantityButtonText}>-</Text>
           </TouchableOpacity>
           <Text style={styles.quantity}>{item.quantity}</Text>
           <TouchableOpacity
             onPress={handleIncreaseQuantity}
-          
-           style={styles.quantityButtonIN}>
+            style={styles.quantityButtonIN}
+          >
             <Text style={styles.quantityButtonText}>+</Text>
           </TouchableOpacity>
         </View>
@@ -129,44 +131,45 @@ const Cart: React.FC = () => {
     dispatch(clearCart());
   };
 
-
-
-
-
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.container1}>
-      {cartItems.length === 0 ? (
-        <View style={styles.emptyCartContainer}>
-          <Text style={styles.emptyCartText}>Your cart is empty.</Text>
-        </View>
-      ) : (
-        <View style={styles.header}>
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.headerText}>Cart list</Text>
-            <Text style={styles.subheaderText}>({cartItems.length} items)</Text>
+      <View style={styles.container1}>
+        {cartItems.length === 0 ? (
+          <View style={styles.emptyCartContainer}>
+            <Text style={styles.emptyCartText}>Your cart is empty.</Text>
+            <Text style={styles.emptyCartText}>
+           add some items to your cart.
+            </Text>
           </View>
-          <TouchableOpacity onPress={handleClearCart}>
-            <Text style={styles.clearButton}>Clear Cart</Text>
+        ) : (
+          <View style={styles.header}>
+            <View style={styles.headerTextContainer}>
+              <Text style={styles.headerText}>Cart list</Text>
+              <Text style={styles.subheaderText}>
+                ({cartItems.length} items)
+              </Text>
+            </View>
+            <TouchableOpacity onPress={handleClearCart}>
+              <Text style={styles.clearButton}>Clear Cart</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <FlatList
+          data={cartItems}
+          renderItem={({ item }) => <BicycleCard item={item} />}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.cardsContainer}
+        />
+
+        {cartItems.length > 0 && (
+          <Subtotal subtotal={subtotal} shipping={shipping} total={total} />
+        )}
+        {cartItems.length > 0 && (
+          <TouchableOpacity style={styles.checkoutButton}>
+            <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
           </TouchableOpacity>
-        </View>
-      )}
-
-      <FlatList
-        data={cartItems}
-        renderItem={({ item }) => <BicycleCard item={item} />}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.cardsContainer}
-      />
-
-      {cartItems.length > 0 && (
-        <Subtotal subtotal={subtotal} shipping={shipping} total={total} />
-      )}
-      {cartItems.length > 0 && (
-        <TouchableOpacity style={styles.checkoutButton}>
-          <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
-        </TouchableOpacity>
-      )}
+        )}
       </View>
     </SafeAreaView>
   );
@@ -178,10 +181,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-  
-    
-  
-
   },
   container1: {
     paddingHorizontal: 15,
@@ -298,15 +297,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-    quantityButtonIN: {
-        backgroundColor: "#F59E0B",
-        borderRadius: 50,
-        padding: 5,
-        width: 30,
-        height: 30,
-        justifyContent: "center",
-        alignItems: "center",
-    },
+  quantityButtonIN: {
+    backgroundColor: "#F59E0B",
+    borderRadius: 50,
+    padding: 5,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
   quantityButtonText: {
     color: "white",
@@ -348,7 +347,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,
-  
   },
   checkoutButtonText: {
     fontSize: 18,
@@ -362,5 +360,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  
 });
